@@ -1,0 +1,33 @@
+﻿@model First.Model.Category
+
+<h2>Create Category</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+<form method="post">
+    <div asp-validation-summary="All"></div>
+
+
+    <label asp-for="Name" class="py-2"></label>
+    <input asp-for="Name" placeholder="Category Name" class="form-control"/>
+   <span asp-validation-for="Name" class="text-danger"></span>
+    <br />
+    <label asp-for="DisplayOrder" class="py-2"></label>
+    <input asp-for="DisplayOrder" placeholder="Display Order" class="form-control" />
+    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+            
+        </div>
+</div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}
