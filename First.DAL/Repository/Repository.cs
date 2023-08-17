@@ -23,6 +23,7 @@ namespace First.DAL.Repository
         public void Add(T entity)
         {
             dbSet.Add(entity);
+            
         }
 
         public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter)

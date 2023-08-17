@@ -4,8 +4,9 @@ using First_project.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace First_project.Controllers
+namespace First_project.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepo _db;
@@ -59,7 +60,7 @@ namespace First_project.Controllers
 
         public IActionResult UpdateCategory(int? id)
         {
-            if(id==null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -121,12 +122,12 @@ namespace First_project.Controllers
         }
 
         //Though both action for delete taking same input we had to change the second action name. Though we change the name we have to tell the real action name which DeleteCategory
-        [HttpPost ,ActionName("DeleteCategory")]
+        [HttpPost, ActionName("DeleteCategory")]
         public IActionResult DeleteCategory2(int? id)
         {
             Category? category2 = _db.Get(c => c.Id == id); ;
 
-            if(category2 == null)
+            if (category2 == null)
             {
                 return NotFound();
             }
@@ -140,5 +141,5 @@ namespace First_project.Controllers
 
     }
 
-        
+
 }
