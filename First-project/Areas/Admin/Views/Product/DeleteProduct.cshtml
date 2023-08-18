@@ -1,0 +1,35 @@
+﻿@model First.Model.Product
+
+<h2>Delete Product</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <form method="post">
+
+                <input asp-for="Id" hidden /> @*We will use it though it is not required but for safe side*@
+                <label asp-for="Name" class="py-2"></label>
+                <input asp-for="Name" placeholder="Product Name" class="form-control" />
+
+                <label asp-for="Size" class="py-2"></label>
+                <input asp-for="Size" placeholder="Product Size" class="form-control" />
+
+                <label asp-for="Price" class="py-2"></label>
+                <input asp-for="Price" placeholder="Product Price" class="form-control" />
+
+                <label asp-for="Owner" class="py-2"></label>
+                <input asp-for="Owner" placeholder="Product Owner" class="form-control" />
+
+                <br />
+                <button type="submit" class="btn btn-primary">Delete</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

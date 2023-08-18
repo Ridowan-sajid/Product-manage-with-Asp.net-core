@@ -1,0 +1,41 @@
+﻿@model First.Model.Product
+
+<h2>Update Product</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <form method="post">
+                <div asp-validation-summary="All"></div>
+                <input asp-for="Id" hidden />
+
+                <label asp-for="Name" class="py-2"></label>
+                <input asp-for="Name" placeholder="Product Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <br />
+                <label asp-for="Size" class="py-2"></label>
+                <input asp-for="Size" placeholder="Product Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+                <br />
+                <label asp-for="Price" class="py-2"></label>
+                <input asp-for="Price" placeholder="Product Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+                <br />
+                <label asp-for="Owner" class="py-2"></label>
+                <input asp-for="Owner" placeholder="Product Owner" class="form-control" />
+                <span asp-validation-for="Owner" class="text-danger"></span>
+
+                <br />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}

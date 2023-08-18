@@ -1,0 +1,60 @@
+﻿@model List<First.Model.Product>
+@*we will take a model which type is List<Category>
+*@
+
+<partial name="_Notification" />
+@*@if (TempData["success"]!=null)
+{
+    <h2>@TempData["success"]</h2>
+}*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-7 p-2">
+            <h2>List of Product</h2>
+        </div>
+        <div class="col-5 p-2 ">
+            <a class="nav-link text-white bg-dark fw-bold text-center" asp-area="Admin" asp-controller="Product" asp-action="CreateProduct">Create Product</a>
+        </div>
+    </div>
+
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+               Product Size
+            </th>
+            <th>
+                Product Price
+            </th>
+            <th>
+                Product Owner
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @*        @foreach (var cat in Model)*@
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Size</td>
+                <td>@product.Price</td>
+                <td>@product.Owner</td>
+
+                <td>
+                    <a asp-area="Admin" asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@product.Id" class="btn btn-dark">Update</a>
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Product" asp-action="DeleteProduct" asp-route-id="@product.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

@@ -12,7 +12,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //Add CategoryRepo Sevice 
-builder.Services.AddScoped<ICategoryRepo,CategoryRepo>();  
+builder.Services.AddScoped<ICategoryRepo,CategoryRepo>();
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
 
 var app = builder.Build();
 

@@ -12,6 +12,7 @@ namespace First_project.Data
        
         //After creating this constructor we have to register it, we will register it to Program.cs
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
