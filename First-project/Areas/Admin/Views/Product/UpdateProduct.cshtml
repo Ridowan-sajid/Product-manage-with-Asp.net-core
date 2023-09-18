@@ -4,29 +4,49 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-8">
-            <form method="post">
-                <div asp-validation-summary="All"></div>
-                <input asp-for="Id" hidden />
+        <div class="col-lg-10">
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-8">
+                        <div asp-validation-summary="All"></div>
+                        <input asp-for="Id" hidden />
+                        <input asp-for="ImageUrl" hidden />
 
-                <label asp-for="Name" class="py-2"></label>
-                <input asp-for="Name" placeholder="Product Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-                <br />
-                <label asp-for="Size" class="py-2"></label>
-                <input asp-for="Size" placeholder="Product Size" class="form-control" />
-                <span asp-validation-for="Size" class="text-danger"></span>
-                <br />
-                <label asp-for="Price" class="py-2"></label>
-                <input asp-for="Price" placeholder="Product Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-                <br />
-                <label asp-for="Owner" class="py-2"></label>
-                <input asp-for="Owner" placeholder="Product Owner" class="form-control" />
-                <span asp-validation-for="Owner" class="text-danger"></span>
+                        <label asp-for="Name" class="py-2"></label>
+                        <input asp-for="Name" placeholder="Product Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Size" class="py-2"></label>
+                        <input asp-for="Size" placeholder="Product Size" class="form-control" />
+                        <span asp-validation-for="Size" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Price" class="py-2"></label>
+                        <input asp-for="Price" placeholder="Product Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                        <br />
+                        <label asp-for="Owner" class="py-2"></label>
+                        <input asp-for="Owner" placeholder="Product Owner" class="form-control" />
+                        <span asp-validation-for="Owner" class="text-danger"></span>
 
-                <br />
-                <button type="submit" class="btn btn-primary">Submit</button>
+
+                        <label class="py-2">Image</label>
+                        <input type="file" name="file" class="form-control" />
+
+
+                        <label asp-for="CategoryId" class="py-2"></label>
+                        <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-select border-1">
+                            <option disabled selected>Select Category</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+
+                        <br />
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-4">
+                        <img src="@Model.ImageUrl" width="100%" style="border-radius:5px; border:1px solid black"/>
+                    </div>
+                </div>
+                
             </form>
 
         </div>

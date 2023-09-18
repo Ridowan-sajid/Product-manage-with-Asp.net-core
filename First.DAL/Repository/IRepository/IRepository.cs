@@ -11,11 +11,11 @@ namespace First.DAL.Repository.IRepository
     //Example: T= Category
     public interface IRepository<T> where T: class
     {
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(string? includeProperties = null);
         //Category category2 = _db.Categories.FirstOrDefault(c => c.Id == id);
         //When we have to pass this (c => c.Id == id) to a function, we will use Expression<>
         //bool=return type
-        T Get(Expression<Func<T,bool>> filter);
+        T Get(Expression<Func<T,bool>> filter, string? includeProperties = null);
         void Add(T entity);
         void Remove(T entity);
         void RemoveMultiple(IEnumerable<T> entity);

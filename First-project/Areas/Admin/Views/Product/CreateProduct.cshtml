@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="All"></div>
 
 
@@ -24,6 +24,9 @@
                 <label asp-for="Owner" class="py-2"></label>
                 <input asp-for="Owner" placeholder="Product Owner" class="form-control" />
                 <span asp-validation-for="Owner" class="text-danger"></span>
+
+                <label class="py-2">Image</label>
+                <input type="file" name="file" class="form-control" />
 
                 <label asp-for="CategoryId" class="py-2"></label>
                 <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-select border-1">

@@ -35,6 +35,9 @@
             <th>
                 Product Owner
             </th>
+            <th>
+                Category
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -46,6 +49,7 @@
                 <td>@product.Size</td>
                 <td>@product.Price</td>
                 <td>@product.Owner</td>
+                <td>@product.Category.Name</td>
 
                 <td>
                     <a asp-area="Admin" asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@product.Id" class="btn btn-dark">Update</a>

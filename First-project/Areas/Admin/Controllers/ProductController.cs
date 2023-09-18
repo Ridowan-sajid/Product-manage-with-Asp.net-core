@@ -10,17 +10,21 @@ namespace First_project.Areas.Admin.Controllers
     {
         private readonly IProductRepo _db;
         private readonly ICategoryRepo _Cdb;
-        public ProductController(IProductRepo db, ICategoryRepo Cdb)
+        //Injected this because to work with file
+        private readonly IWebHostEnvironment _environment;
+
+        public ProductController(IProductRepo db, ICategoryRepo Cdb, IWebHostEnvironment environment)
         {
             _db = db;
             _Cdb = Cdb;
+            _environment = environment;
         }
 
         //Read Category
 
         public IActionResult Index()
         {
-            List<Product> products = _db.GetAll().ToList();
+            List<Product> products = _db.GetAll(includeProperties: "Category").ToList();
             return View(products);
         }
 
@@ -42,7 +46,7 @@ namespace First_project.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProduct(Product product)
+        public IActionResult CreateProduct(Product product,IFormFile? file)
         {
 
 
@@ -53,6 +57,20 @@ namespace First_project.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                //Upload image
+                string wwwRootPath = _environment.WebRootPath;
+                if (file!=null)
+                {
+                    string fileName=Guid.NewGuid().ToString()+Path.GetExtension(file.FileName);
+                    string productPath=Path.Combine(wwwRootPath, @"images\Product");
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    product.ImageUrl = @"\images\Product\" + fileName;
+                }
+                ////////
                 _db.Add(product);
                 _db.Save();
                 TempData["success"] = "Product created successfully";
@@ -76,15 +94,20 @@ namespace First_project.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
+            //we have to pass includeProperties: "Category" for including Category
+            IEnumerable<SelectListItem> CategoryList = _Cdb.GetAll(includeProperties: "Category").Select(u => new SelectListItem
+            {
+                Text = u.Name, //which we want to show
+                Value = u.Id.ToString(),
+                //To use SelectListItem we have to use Text and Value.
+            }).ToList();
+            ViewBag.CategoryList = CategoryList;
             return View(product);
         }
 
         [HttpPost]
-        public IActionResult UpdateProduct(Product product)
+        public IActionResult UpdateProduct(Product product, IFormFile? file)
         {
-
-
             if (product.Name != null && product.Name.ToLower() == "test")
             {
                 ModelState.AddModelError("", "Product Name can't be test");
@@ -92,6 +115,36 @@ namespace First_project.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+
+                //Upload image
+                string wwwRootPath = _environment.WebRootPath;
+                if (file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\Product");
+
+                    //suppose in updating user upload a new imgae. Then first we have to delete the previous image 
+                    if(!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        //In database we store a forward slash too, to remove forward slash we trim.
+                        var oldImagePath=Path.Combine(wwwRootPath,product.ImageUrl.TrimStart('\\'));
+                        if(System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+
+                    }
+                    ///////
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    product.ImageUrl = @"\images\Product\" + fileName;
+                }
+                ////////
+
+
                 //We don't need to tell asp.net the Id because it will specified id by itself. Though we can tell it by hidden it which is safe side.
                 _db.Update(product);
                 _db.Save();

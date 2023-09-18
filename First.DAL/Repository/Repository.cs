@@ -18,6 +18,9 @@ namespace First.DAL.Repository
         {
             _db = db;
             this.dbSet=_db.Set<T>();
+
+            ///Including Category which was not showing in Product info
+            _db.Products.Include(u => u.Category);
             //_db.Categories == dbSet
         }
         public void Add(T entity)
@@ -26,19 +29,39 @@ namespace First.DAL.Repository
             
         }
 
-        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter)
+        //we have to pass string? includeProperties=null for including Category
+        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter,string? includeProperties=null)
         {
             IQueryable<T> query
                 =dbSet.Where(filter);
+
+            //In Product info we were not able to see category (which is a relationship key). 
+            //So we include it here So that we can see category too with its id
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach(var property in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(property);
+                }
+            }
+            //////////
+
             return query.FirstOrDefault();
            //Category category3 = _db.Categories.Where(c => c.Id == id).FirstOrDefault()
 
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query
                 = dbSet;
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(property);
+                }
+            }
             return query.ToList();
             
         }
