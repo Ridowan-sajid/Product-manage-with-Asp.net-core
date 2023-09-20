@@ -35,8 +35,7 @@ namespace First.DAL.Repository
             IQueryable<T> query
                 =dbSet.Where(filter);
 
-            //In Product info we were not able to see category (which is a relationship key). 
-            //So we include it here So that we can see category too with its id
+            
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach(var property in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
@@ -44,7 +43,7 @@ namespace First.DAL.Repository
                     query = query.Include(property);
                 }
             }
-            //////////
+            
 
             return query.FirstOrDefault();
            //Category category3 = _db.Categories.Where(c => c.Id == id).FirstOrDefault()
@@ -55,6 +54,9 @@ namespace First.DAL.Repository
         {
             IQueryable<T> query
                 = dbSet;
+
+            //In Product info we were not able to see category (which is a relationship key). 
+            //So we include it here So that we can see category too with its id
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var property in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -62,6 +64,7 @@ namespace First.DAL.Repository
                     query = query.Include(property);
                 }
             }
+            //////////
             return query.ToList();
             
         }

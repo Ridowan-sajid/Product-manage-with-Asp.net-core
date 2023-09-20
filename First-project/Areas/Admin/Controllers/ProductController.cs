@@ -1,11 +1,15 @@
 ﻿using First.DAL.Repository.IRepository;
 using First.Model;
+using First.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace First_project.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    //Securing these api by adding Authorize
+    [Authorize(Roles =SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IProductRepo _db;
@@ -94,8 +98,7 @@ namespace First_project.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            //we have to pass includeProperties: "Category" for including Category
-            IEnumerable<SelectListItem> CategoryList = _Cdb.GetAll(includeProperties: "Category").Select(u => new SelectListItem
+            IEnumerable<SelectListItem> CategoryList = _Cdb.GetAll().Select(u => new SelectListItem
             {
                 Text = u.Name, //which we want to show
                 Value = u.Id.ToString(),
